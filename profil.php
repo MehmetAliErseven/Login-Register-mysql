@@ -30,6 +30,10 @@ if (!isset($_SESSION['login']) || !$_SESSION['login']){
         .bg-dark {
             background: #181818;
             color: lightblue;
+            border-color: #5D6D7E;
+        }
+        .bg-light {
+            border-color: lightblue;
         }
         h5, h6 {
             text-align: left;
@@ -37,21 +41,21 @@ if (!isset($_SESSION['login']) || !$_SESSION['login']){
         }
     </style>
 </head>
-<body class="bg-dark">
+<body class="<?= cookie('back') ? cookie('back') : 'bg-dark'; ?>">
 <div id="main" class="container text-center">
-    <div class="card bg-dark" style="width: 22rem;">
+    <div class="card <?= cookie('back') ? cookie('back') : 'bg-dark'; ?>" style="width: 22rem;">
         <div class="card-body">
-            <h6 class="card-title">Welcome</h6>
-            <h5 class="card-title"><?= session('username') ?></h5>
-            <form action="">
-                <textarea class="bg-dark mt-1" name="" id="" cols="30" rows="10" style="max-height: 22rem; min-height: 11rem;" >Some quick example text to build on the card title and make up the bulk of the card's content.Some quick example text to build on the card title and make up the bulk of the card's content.</textarea>
+            <h5 class="card-title">Welcome <?= session('username') ?></h5>
+            <h6 class="card-title">You can take notes below.</h6>
+            <form action="db_con.php?p_text=text" method="post">
+                <textarea class="<?= cookie('back') ? cookie('back') : 'bg-dark'; ?> mt-1" name="text" id="" cols="30" rows="10" style="max-height: 22rem; min-height: 11rem;" maxlength="390" ><?= session('savedText') ?></textarea>
                 <button class="btn btn-sm col-3 btn-primary mt-3" type="submit">Save</button>
             </form>
-            <a href="index.php" class="btn btn-success btn-sm mt-3 w-75">Logout</a>
+            <a href="db_con.php?con=logout" class="btn btn-success btn-sm mt-3 w-75">Logout</a>
         </div>
         <div class="card-body">
-            <a href="" class="btn btn-light card-link">Light Mode</a>
-            <a href="" class="btn btn-light card-link">Dark Mode</a>
+            <a href="db_con.php?p_color=color&back=bg-light" class="btn btn-light card-link">Light Mode</a>
+            <a href="db_con.php?p_color=color&back=bg-dark" class="btn btn-light card-link">Dark Mode</a>
         </div>
     </div>
 </div>

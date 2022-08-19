@@ -37,19 +37,18 @@ if (get('con') == 'login') {
     } else {
         $email = post('email');
         $pass = post('password');
-        $name = post('name');
         $connection = connect();
-        $sql = "SELECT user. email, user. password, user. name FROM users. user WHERE user. email = '$email' AND user. password = '$pass'";
+        $sql = "SELECT user. email, user. password, user. name, user. text FROM users. user WHERE user. email = '$email' AND user. password = '$pass'";
         $result = $connection->query($sql);
 
         $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-        $info = array($row['email'] => $row['password'], $row['name']);
+        $info = array($row['email'] => $row['password'], $row['name'], $row['text']);
 
         if (array_key_exists($email, $info)) {
-
             if ($info[$email] == $pass) {
                 $_SESSION['login'] = true;
                 $_SESSION['username'] = $info[0];
+                $_SESSION['savedText'] = $info[1];
                 header('location:profil.php');
                 exit();
             }
@@ -61,4 +60,32 @@ if (get('con') == 'login') {
 
         $connection->close();
     }
+}
+
+if (get('p_text') == 'text') {
+    $text = post('text');
+    $_SESSION['savedText'] = $text;
+    $conn = connect();
+    $sql = "UPDATE users.user SET text = '$text' WHERE email = '$_SESSION[email]';";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "Record updated successfully";
+    } else {
+        echo "Error updating record: " . $conn->error;
+    }
+
+    $conn->close();
+    header('location:profil.php?text=add');
+}
+
+if (get('con') == 'logout') {
+    session_destroy();
+    session_start();
+    $_SESSION['error'] = 'Logged out successful';
+    header('location:index.php');
+}
+
+if(get('p_color') == 'color') {
+    setcookie('back', get('back'), time() +(86400 * 365));
+    header('location:' .$_SERVER['HTTP_REFERER'] ?? 'index.php');
 }

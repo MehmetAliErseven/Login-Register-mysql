@@ -23,3 +23,11 @@ function session ($session) {
         return false;
     }
 }
+
+function cookie ($cookie) {
+    if (isset($_COOKIE[$cookie])) {
+        return trim($_COOKIE[$cookie]);
+    } else {
+        return false;
+    }
+}

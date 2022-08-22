@@ -1,12 +1,10 @@
 <?php
-
-include 'helper.php';
+require 'helper.php';
 session_start();
 
 if (!isset($_SESSION['login']) || !$_SESSION['login']){
     header('location:index.php');
 }
-
 ?>
 
 <!doctype html>
@@ -41,21 +39,21 @@ if (!isset($_SESSION['login']) || !$_SESSION['login']){
         }
     </style>
 </head>
-<body class="<?= cookie('back') ? cookie('back') : 'bg-dark'; ?>">
+<body class="<?=cookieCall('background') ?cookieCall('background') : 'bg-dark'; ?>">
 <div id="main" class="container text-center">
-    <div class="card <?= cookie('back') ? cookie('back') : 'bg-dark'; ?>" style="width: 22rem;">
+    <div class="card <?=cookieCall('background') ?cookieCall('background') : 'bg-dark'; ?>" style="width: 22rem;">
         <div class="card-body">
-            <h5 class="card-title">Welcome <?= session('username') ?></h5>
+            <h5 class="card-title">Welcome <?= sessionCall('username') ?></h5>
             <h6 class="card-title">You can take notes below.</h6>
-            <form action="db_con.php?p_text=text" method="post">
-                <textarea class="<?= cookie('back') ? cookie('back') : 'bg-dark'; ?> mt-1" name="text" id="" cols="30" rows="10" style="max-height: 22rem; min-height: 11rem;" maxlength="390" ><?= session('savedText') ?></textarea>
+            <form action="profil_action.php?p_text=text" method="post">
+                <textarea class="<?=cookieCall('background') ?cookieCall('background') : 'bg-dark'; ?> mt-1" name="text" id="" cols="30" rows="10" style="max-height: 22rem; min-height: 11rem;" maxlength="390" ><?= sessionCall('savedText') ?></textarea>
                 <button class="btn btn-sm col-3 btn-primary mt-3" type="submit">Save</button>
             </form>
-            <a href="db_con.php?con=logout" class="btn btn-success btn-sm mt-3 w-75">Logout</a>
+            <a href="profil_action.php?con=logout" class="btn btn-success btn-sm mt-3 w-75">Logout</a>
         </div>
         <div class="card-body">
-            <a href="db_con.php?p_color=color&back=bg-light" class="btn btn-light card-link">Light Mode</a>
-            <a href="db_con.php?p_color=color&back=bg-dark" class="btn btn-light card-link">Dark Mode</a>
+            <a href="profil_action.php?p_color=color&background=bg-light" class="btn btn-light card-link">Light Mode</a>
+            <a href="profil_action.php?p_color=color&background=bg-dark" class="btn btn-light card-link">Dark Mode</a>
         </div>
     </div>
 </div>

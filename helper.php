@@ -16,7 +16,7 @@ function post ($post) {
     }
 }
 
-function session ($session) {
+function sessionCall ($session) {
     if (isset($_SESSION[$session])) {
         return trim($_SESSION[$session]);
     } else {
@@ -24,7 +24,7 @@ function session ($session) {
     }
 }
 
-function cookie ($cookie) {
+function cookieCall ($cookie) {
     if (isset($_COOKIE[$cookie])) {
         return trim($_COOKIE[$cookie]);
     } else {

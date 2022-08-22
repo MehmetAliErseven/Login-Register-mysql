@@ -1,8 +1,6 @@
 <?php
-
-include 'helper.php';
+require 'helper.php';
 session_start();
-
 ?>
 
 <!doctype html>
@@ -31,76 +29,50 @@ session_start();
     <style>
         body {
             width: 50vw;
-            margin: 5vw auto;
+            margin: 10vw auto;
         }
     </style>
 </head>
 <body>
-<ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+<ul class="nav nav-pills nav-justified mb-5" id="ex1" role="tablist">
     <li class="nav-item" role="presentation">
         <a class="nav-link active" id="tab-login" data-mdb-toggle="pill" href="index.php" role="tab"
            aria-controls="pills-login" aria-selected="true">Login</a>
     </li>
     <li class="nav-item" role="presentation">
-        <a class="nav-link" id="tab-register" data-mdb-toggle="pill" href="signup.php" role="tab"
+        <a class="nav-link" id="tab-register" data-mdb-toggle="pill" href="signup_body.php" role="tab"
            aria-controls="pills-register" aria-selected="false">Register</a>
     </li>
 </ul>
 <div class="tab-content">
     <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
-        <form action="db_con.php?con=login" method="post">
-            <div class="text-center mb-3">
-                <p>Sign in with:</p>
-                <button type="button" class="btn btn-link btn-floating mx-1">
-                    <i class="fab fa-facebook-f"></i>
-                </button>
-
-                <button type="button" class="btn btn-link btn-floating mx-1">
-                    <i class="fab fa-google"></i>
-                </button>
-
-                <button type="button" class="btn btn-link btn-floating mx-1">
-                    <i class="fab fa-twitter"></i>
-                </button>
-
-                <button type="button" class="btn btn-link btn-floating mx-1">
-                    <i class="fab fa-github"></i>
-                </button>
-            </div>
-
-            <p class="text-center">or:</p>
-            <?php if (session('error')): ?>
+        <form action="profil_action.php?con=login" method="post">
+            <?php if (sessionCall('error')): ?>
             <div class="alert alert-danger" role="alert">
-                <?= session('error'); ?>
+                <?= sessionCall('error'); ?>
             </div>
             <?php endif; ?>
+
+            <?php if (sessionCall('success')): ?>
+                <div class="alert alert-success" role="alert">
+                    <?= sessionCall('success'); ?>
+                </div>
+            <?php endif; ?>
+
             <div class="form-floating mb-4">
-                <input name="email" type="email" id="loginName" class="form-control" value="<?= session('email') ?>" />
+                <input name="email" type="email" id="loginName" class="form-control" value="<?= sessionCall('email') ?>" />
                 <label for="loginName">Email</label>
             </div>
 
             <div class="form-floating mb-4">
-                <input name="password" type="password" id="loginPassword" class="form-control" value="<?= session('password') ?>" />
+                <input name="password" type="password" id="loginPassword" class="form-control" />
                 <label for="loginPassword">Password</label>
-            </div>
-
-            <div class="row mb-4">
-                <div class="col-md-6 d-flex justify-content-center">
-                    <div class="form-check mb-3 mb-md-0">
-                        <input class="form-check-input" type="checkbox" value="" id="loginCheck" checked />
-                        <label class="form-check-label" for="loginCheck"> Remember me </label>
-                    </div>
-                </div>
-
-                <div class="col-md-6 d-flex justify-content-center">
-                    <a href="#!">Forgot password?</a>
-                </div>
             </div>
 
             <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
 
             <div class="text-center">
-                <p>Not a member? <a href="signup.php">Register</a></p>
+                <p>Not a member? <a href="signup_body.php">Register</a></p>
             </div>
         </form>
     </div>
@@ -111,5 +83,5 @@ session_start();
 <?php
 $_SESSION['error'] = null;
 $_SESSION['email'] = null;
-$_SESSION['password'] = null;
+$_SESSION['success'] = null;
 ?>

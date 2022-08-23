@@ -1,5 +1,5 @@
 <?php
-
+// db connection.
 function connect () {
     $servername = "localhost";
     $username = "root";
@@ -18,6 +18,7 @@ function connect () {
     return $connect;
 }
 
+// for delete or update from db.
 function runQuery($query, $type, $var) {
     $connection = connect();
     $ask = $connection->prepare($query);
@@ -32,4 +33,23 @@ function runQuery($query, $type, $var) {
 
     $ask->close();
     $connection->close();
+}
+
+// for get tables info.
+function getInfo($query) {
+    $conGet = connect();
+    $sql = $query;
+    $result = $conGet->query($sql);
+
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            print_r($row);
+            echo "<br>";
+            echo "<br>";
+        }
+    } else {
+        echo "0 Result";
+    }
+
+    $conGet->close();
 }

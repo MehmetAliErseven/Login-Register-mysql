@@ -1,6 +1,6 @@
 <?php
 require 'helper.php';
-require 'db_connection.php';
+require 'DB_connection.php';
 session_start();
 
 if (get('con') == 'login') {

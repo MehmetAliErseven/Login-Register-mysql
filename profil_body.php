@@ -45,17 +45,35 @@ if (!isset($_SESSION['login']) || !$_SESSION['login']){
         <div class="card-body">
             <h5 class="card-title">Welcome <?= sessionCall('username') ?></h5>
             <h6 class="card-title">You can take notes below.</h6>
-            <form action="profil_action.php?p_text=text" method="post">
+            <form action="profil_login_post.php?p_text=text" method="post">
                 <textarea class="<?=cookieCall('background') ?cookieCall('background') : 'bg-dark'; ?> mt-1" name="text" id="" cols="30" rows="10" style="max-height: 22rem; min-height: 11rem;" maxlength="390" ><?= sessionCall('savedText') ?></textarea>
+
+                <?php if (sessionCall('success')): ?>
+                    <div class="alert alert-success mt-3" role="alert" style="margin: 8px 32px">
+                        <?= sessionCall('success'); ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (sessionCall('error')): ?>
+                    <div class="alert alert-success mt-3" role="alert" style="margin: 8px 32px">
+                        <?= sessionCall('error'); ?>
+                    </div>
+                <?php endif; ?>
+
                 <button class="btn btn-sm col-3 btn-primary mt-3" type="submit">Save</button>
             </form>
-            <a href="profil_action.php?con=logout" class="btn btn-success btn-sm mt-3 w-75">Logout</a>
+            <a href="profil_login_post.php?con_out=logout" class="btn btn-success btn-sm mt-3 w-75">Logout</a>
         </div>
         <div class="card-body">
-            <a href="profil_action.php?p_color=color&background=bg-light" class="btn btn-light card-link">Light Mode</a>
-            <a href="profil_action.php?p_color=color&background=bg-dark" class="btn btn-light card-link">Dark Mode</a>
+            <a href="profil_login_post.php?p_color=color&background=bg-light" class="btn btn-light card-link">Light Mode</a>
+            <a href="profil_login_post.php?p_color=color&background=bg-dark" class="btn btn-light card-link">Dark Mode</a>
         </div>
     </div>
 </div>
 </body>
 </html>
+
+<?php
+$_SESSION['success'] = null;
+$_SESSION['error'] = null;
+?>

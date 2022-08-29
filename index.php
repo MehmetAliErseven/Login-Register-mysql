@@ -46,7 +46,7 @@ session_start();
 </ul>
 <div class="tab-content">
     <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
-        <form action="profil_action.php?con=login" method="post">
+        <form action="profil_login_post.php?con=login" method="post">
             <?php if (sessionCall('error')): ?>
             <div class="alert alert-danger" role="alert">
                 <?= sessionCall('error'); ?>

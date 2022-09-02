@@ -78,8 +78,8 @@ session_start();
             <div class="form-floating mb-3">
                 <select name="job_title" id="job_title" class="form-select" aria-label="Default select example">
                     <?php
-                    require 'GetJobs_control.php';
-                    $getJobs = new GetJobs_control();
+                    require 'GetJobsControl.php';
+                    $getJobs = new GetJobsControl();
                     $getJobs->getJobs();
                     ?>
                 </select>

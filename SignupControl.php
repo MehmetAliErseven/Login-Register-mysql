@@ -1,7 +1,7 @@
 <?php
-require 'Signup_db.php';
+require 'SignupDb.php';
 
-class Signup_control extends Signup_db {
+class SignupControl extends SignupDb {
     private $first_name;
     private $last_name;
     private $email;
@@ -18,14 +18,14 @@ class Signup_control extends Signup_db {
         $this->email = $email;
         $this->hire_date = $hire_date;
         $this->phone_number = $phone_number;
-        $this->password = $password;
+        $this->password = password_hash($password, PASSWORD_DEFAULT);
         $this->r_password = $r_password;
         $this->salary = $salary;
         $this->job_title = $job_title;
     }
 
     public function checkPassword () {
-        if($this->password !== $this->r_password) {
+        if(!password_verify($this->r_password, $this->password)) {
             $_SESSION['error'] = 'Your password not same';
             header('location:signup_body.php');
             exit();
@@ -34,7 +34,7 @@ class Signup_control extends Signup_db {
 
     public function checkEmail () {
         $result = parent::searchEmail($this->email);
-        if(mysqli_num_rows($result)) {
+        if($result == $this->email) {
             $_SESSION['m_error'] = 'This email address is used by another user, please try another...';
             header('location:signup_body.php');
             exit();

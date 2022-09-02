@@ -1,16 +1,22 @@
 <?php
-require_once'Profil_login.php';
+require_once 'LoginDb.php';
 
-class Profil_settext extends Profil_login {
+class InProfilControl extends LoginDb {
 
-    private $textFrom_get;
+    public $textFrom_get;
     private $email;
-    private $savedText;
+    protected $savedText;
 
-    public function __construct($textFrom_get, $email, $savedText) {
+    public $color;
+    public $background_color;
+
+    public function __construct($textFrom_get, $email, $savedText, $color, $background_color) {
         $this->textFrom_get = $textFrom_get;
         $this->email = $email;
         $this->savedText = $savedText;
+
+        $this->color = $color;
+        $this->background_color = $background_color;
     }
 
     public function setText () {
@@ -19,7 +25,7 @@ class Profil_settext extends Profil_login {
             $email = $this->email;
             $_SESSION['savedText'] = $text;
 
-            if (parent::setTextToDb($text, $email) === TRUE) {
+            if (parent::setTextToDb($text, $email)) {
                 $_SESSION['success'] = 'Text update successfully complete';
             } else {
                 $_SESSION['error'] = 'Update error.';
@@ -27,16 +33,6 @@ class Profil_settext extends Profil_login {
 
             header('location:profil_body.php?text=add');
         }
-    }
-}
-
-class Profil_background {
-    private $color;
-    private $background_color;
-
-    public function __construct($color, $background_color) {
-        $this->color = $color;
-        $this->background_color = $background_color;
     }
 
     public function setBackground () {

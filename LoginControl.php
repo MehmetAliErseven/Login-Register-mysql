@@ -1,7 +1,7 @@
 <?php
-require 'Profil_login.php';
+require 'LoginDb.php';
 
-class Profil_login_control extends Profil_login {
+class LoginControl extends LoginDb {
 
     private $email;
     private $pass;
@@ -20,42 +20,31 @@ class Profil_login_control extends Profil_login {
             if (!$this->email) {
                 $_SESSION['error'] = 'Please enter your email';
                 header('location:index.php');
-                exit();
             } elseif (!$this->pass) {
                 $_SESSION['error'] = 'Please enter your password';
                 header('location:index.php');
-                exit();
             } else {
                 $email = $this->email;
                 $pass = $this->pass;
 
-                $info = parent::getInfo($email, $pass);
+                $info = parent::getInfo($email);
 
                 if (array_key_exists($email, $info)) {
-                    if ($info[$email] == $pass) {
+                    if (password_verify($pass, $info[$email])) {
                         $_SESSION['login'] = true;
                         $_SESSION['username'] = $info[0];
                         $_SESSION['savedText'] = $info[1];
                         header('location:profil_body.php');
-                        exit();
+                    }else {
+                        $_SESSION['error'] = 'Wrong email or password';
+                        header('location:index.php');
                     }
                 }else {
                     $_SESSION['error'] = 'Wrong email or password';
                     header('location:index.php');
-                    exit();
                 }
             }
-        }
-    }
-}
-
-class Logout {
-    public function __construct($con_out){
-        if ($con_out == 'logout') {
-            session_destroy();
-            session_start();
-            $_SESSION['error'] = 'Logged out successful';
-            header('location:index.php');
+            exit();
         }
     }
 }

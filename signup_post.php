@@ -14,8 +14,8 @@ if (isset($_POST['first_name'], $_POST['last_name'], $_POST['email'], $_POST['hi
     $job_title = $_POST['job_title'];
 
 
-    require 'Signup_control.php';
-    $save = new Signup_control($first_name, $last_name, $email, $hire_date, $phone_number, $password, $r_password, $salary, $job_title);
+    require 'SignupControl.php';
+    $save = new SignupControl($first_name, $last_name, $email, $hire_date, $phone_number, $password, $r_password, $salary, $job_title);
     $save->checkPassword();
     $save->checkEmail();
     $save->saveUser();
